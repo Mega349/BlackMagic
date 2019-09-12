@@ -14,6 +14,7 @@ if !FileExist(iniFile)
 	IniWrite,1,%iniFile%,Version,ConfigVersion
 
 	IniWrite,%PointerAutoUpdate%,%iniFile%,General,PointerAutoUpdate
+	IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
     IniWrite,%LastSpeed%,%iniFile%,General,LastSpeed
 	IniWrite,%ShowTooltip%,%iniFile%,General,ShowTooltip
 
@@ -41,6 +42,7 @@ if FileExist(iniFile)
 	Gosub, Updateini
 
 	IniRead,PointerAutoUpdate,%iniFile%,General,PointerAutoUpdate
+	IniRead,EnableUpdateCheck,%iniFile%,General,EnableUpdateCheck
     IniRead,Speed,%iniFile%,General,LastSpeed
 	IniRead,ShowTooltip,%iniFile%,General,ShowTooltip
 

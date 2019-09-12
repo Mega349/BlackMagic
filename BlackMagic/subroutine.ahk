@@ -81,12 +81,14 @@ return
 
 Save:
 GuiControlGet,PointerAutoUpdate,,PointerAutoUpdate
+GuiControlGet,EnableUpdateCheck,,EnableUpdateCheck
 GuiControlGet,ShowTooltip,,ShowTooltip
 GuiControlGet,Speed,,Speed
 GuiControlGet,FlyAccel,,FlyAccel
 GuiControlGet,SkipDistance,,SkipDistance
 
 IniWrite,%PointerAutoUpdate%,%iniFile%,General,PointerAutoUpdate
+IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
 IniWrite,%ShowTooltip%,%iniFile%,General,ShowTooltip
 IniWrite,%Speed%,%iniFile%,General,LastSpeed
 IniWrite,%FlyAccel%,%iniFile%,Values,FlyAccel
@@ -94,6 +96,12 @@ IniWrite,%SkipDistance%,%iniFile%,Values,SkipDistance
 return
 
 Updateini:
+if (ConfigVersion < 2 || ConfigVersion == "" || ConfigVersion == "ERROR")
+{
+	ConfigVersion := 2
+	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
+	IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
+}
 return
 
 GuiClose:

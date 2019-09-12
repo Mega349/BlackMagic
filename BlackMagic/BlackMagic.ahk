@@ -12,11 +12,13 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.0"
+global ScriptVersion := "1.1"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
+TempVersionsFile = %A_Temp%\Versions.ini
 ;TempSpeedFile = %A_Temp%\SpeedValue.txt
 PointerHostFile := "https://webtrash.lima-city.de/Trove_Pointer_Host.ini"
 SpeedHostFile := "https://webtrash.lima-city.de/SpeedValue.txt"
+VersionsFile := "https://webtrash.lima-city.de/Versions.ini"
 PointerFile := "pointer.ini"
 SpeedFile := "SpeedValue.txt"
 SpeedFileBackup := "SpeedValue.txt.back"
@@ -45,6 +47,7 @@ global SpeedOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
 ;Config Vars
 PointerAutoUpdate := 1
+EnableUpdateCheck := 1
 ShowTooltip := 1
 LastSpeed := 1
 FlyAccel := 20
@@ -66,7 +69,7 @@ SpeedValueString := []
 ;Start:
 ;------------------------
 
-SplashTextOn,250,25,%ScriptName%,% ScriptName " v." ScriptVersion " wird gestartet..."
+SplashTextOn,130,25,% ScriptName " v." ScriptVersion,% "Starting..."
 
 ;------------------------
 ;Admin Check:
@@ -134,9 +137,38 @@ while (CounterPOS <= SpeedString.Length())
 }
 
 ;------------------------
+;Update check:
+;------------------------
+
+if (EnableUpdateCheck == TRUE)
+{
+	SplashTextOn,200,25,% ScriptName " v." ScriptVersion,% "Check for Update..."
+	try
+	{
+		UrlDownloadToFile, %VersionsFile%, %TempVersionsFile%
+	}
+	if FileExist(TempVersionsFile)
+	{
+		IniRead,NewScriptVersion,%TempVersionsFile%,Version,BM
+		if (NewScriptVersion != "ERROR" && NewScriptVersion != ScriptVersion)
+		{
+			SplashTextOff
+			MsgBox, 4, %ScriptName%,% "An Update is available! " ScriptVersion " -> " NewScriptVersion "`nDownload now?"
+			IfMsgBox, Yes
+			{
+				IniRead,NewScriptVersionURL,%TempVersionsFile%,URL,BM
+				run, %NewScriptVersionURL%
+			}
+		}
+	}
+	FileDelete,%TempVersionsFile%
+}
+
+;------------------------
 ;GUI:
 ;------------------------
 
+SplashTextOn,200,25,% ScriptName " v." ScriptVersion,% "Building GUI..."
 #Include, GUI.ahk
 
 ;------------------------
