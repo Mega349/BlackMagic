@@ -106,3 +106,25 @@ if (EnableSpeed == 1)
 	SetTimer, Speed, -20
 }
 return
+
+;------------------------
+;Float:
+;------------------------
+
+StartFloat:
+Gosub, CheckTroveWindow
+EnableFloat := 1
+Gosub, Float
+return
+
+StopFloat:
+EnableFloat := 0
+return
+
+Float:
+if (EnableFloat == 1)
+{
+	WriteProcessMemory(pid, yAccelerationAddress, FloatToHex(0.6))
+	SetTimer, Float, -10
+}
+return

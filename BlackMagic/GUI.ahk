@@ -1,6 +1,6 @@
 Gui,Add,Tab,w300 h260, Settings|Hotkeys
 
-Gui,Show,,%ScriptName% v.%ScriptVersion% | %LastUpdateSupport%
+Gui,Show,,%ScriptName% v%ScriptVersion% | %LastUpdateSupport%
 
 Gui,Tab,1
 if(PointerAutoUpdate == 1)
@@ -57,28 +57,32 @@ Gui, Add, Text, x22 yp+19,------------------------------------------------------
 Gui, Add, Text, x22 yp+16 cgreen, Freeze High is useful for infinite flying
 
 Gui,Tab,2
-Gui, Add, Text, x22 y40, Speed Hack:
-Gui, Add, Hotkey,xp+80 yp-2 w80 h20 vSpeedKey, %SpeedKey%
-Gui, Add, Text, xp+85 yp+2, default = CTRL + K
-
-Gui, Add, Text, x22 yp+28, Freeze Position:
-Gui, Add, Hotkey,xp+80 yp-2 w80 h20 vFreezeKey, %FreezeKey%
-Gui, Add, Text, xp+85 yp+2, default = CTRL + P
-
-Gui, Add, Text, x22 yp+28, Freeze High:
-Gui, Add, Hotkey,xp+80 yp-2 w80 h20 vyFreezeKey, %yFreezeKey%
-Gui, Add, Text, xp+85 yp+2, default = CTRL + L
-
-Gui, Add, Text, x22 yp+28, Fly Hack:
-Gui, Add, Hotkey,xp+80 yp-2 w80 h20 vFlyKey, %FlyKey%
-Gui, Add, Text, xp+85 yp+2, default = CTRL + W
-
-Gui, Add, Text, x22 yp+28, Skip (Teleport):
-Gui, Add, Hotkey,xp+80 yp-2 w80 h20 vSkipKey, %SkipKey%
+Gui, Add, Text, x22 y35, Skip (Teleport):
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vSkipKey, %SkipKey%
 Gui, Add, Text, xp+85 yp+2, default = MButton
 
-Gui, Add, Button, x102 yp+25 gSaveHotkeys, Save
+Gui, Add, Text, x22 yp+25, Speed Hack:
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vSpeedKey, %SpeedKey%
+Gui, Add, Text, xp+85 yp+2, default = CTRL + K
 
-Gui, Add, Text,x22 yp+35 cgreen, MButton = Pressed Mouse Wheel
+Gui, Add, Text, x22 yp+25, Freeze Position:
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vFreezeKey, %FreezeKey%
+Gui, Add, Text, xp+85 yp+2, default = CTRL + P
+
+Gui, Add, Text, x22 yp+25, Freeze High:
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vyFreezeKey, %yFreezeKey%
+Gui, Add, Text, xp+85 yp+2, default = CTRL + L
+
+Gui, Add, Text, x22 yp+25, Free Fly: ( hold )
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vFlyKey, %FlyKey%
+Gui, Add, Text, xp+85 yp+2, default = CTRL + W
+
+Gui, Add, Text, x22 yp+25, Float:
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vFloatKey, %FloatKey%
+Gui, Add, Text, xp+85 yp+2, default = CTRL + F
+
+Gui, Add, Button, x112 yp+25 gSaveHotkeys, Save
+
+Gui, Add, Text,x22 yp+30 cgreen, MButton = Pressed Mouse Wheel
 Gui, Add, Text,x22 yp+15 cred, Controller or Mouse Buttons cant be set or displayed here!
 Gui, Add, Text,x22 yp+15 cred, set/change "special Buttons" at "%Inifile%"

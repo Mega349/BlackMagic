@@ -52,11 +52,14 @@ ShowTooltip := 1
 LastSpeed := 1
 FlyAccel := 20
 SkipDistance:= 3.5
+
+;default Keys
 SpeedKey = ^k
 FreezeKey = ^p
 yFreezeKey = ^l
 FlyKey = ^w
 SkipKey = MButton
+FloatKEy = ^f
 
 ;Internal Vars
 SplitSpeed := []
@@ -69,7 +72,7 @@ SpeedValueString := []
 ;Start:
 ;------------------------
 
-SplashTextOn,130,25,% ScriptName " v." ScriptVersion,% "Starting..."
+SplashTextOn,130,25,% ScriptName " v" ScriptVersion,% "Starting..."
 
 ;------------------------
 ;Admin Check:
@@ -142,7 +145,7 @@ while (CounterPOS <= SpeedString.Length())
 
 if (EnableUpdateCheck == TRUE)
 {
-	SplashTextOn,200,25,% ScriptName " v." ScriptVersion,% "Check for Update..."
+	SplashTextOn,200,25,% ScriptName " v" ScriptVersion,% "Check for Update..."
 	try
 	{
 		UrlDownloadToFile, %VersionsFile%, %TempVersionsFile%
@@ -168,7 +171,7 @@ if (EnableUpdateCheck == TRUE)
 ;GUI:
 ;------------------------
 
-SplashTextOn,200,25,% ScriptName " v." ScriptVersion,% "Building GUI..."
+SplashTextOn,200,25,% ScriptName " v" ScriptVersion,% "Building GUI..."
 #Include, GUI.ahk
 
 ;------------------------

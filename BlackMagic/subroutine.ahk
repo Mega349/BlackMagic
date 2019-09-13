@@ -14,6 +14,10 @@ if(WinActive("ahk_exe Trove.exe") && ShowTooltip == 1)
 	{
         ToolTipString := ToolTipString "`n" "Freeze Position = ON"
 	}
+	if (EnableFloat == 1)
+	{
+        ToolTipString := ToolTipString "`n" "Float = ON"
+	}
 	ToolTip, %ToolTipString%, 0, 0, 1
 }
 else
@@ -101,6 +105,7 @@ if (ConfigVersion < 2 || ConfigVersion == "" || ConfigVersion == "ERROR")
 	ConfigVersion := 2
 	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
 	IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
+	IniWrite,%FloatKey%,%iniFile%,Hotkeys,FloatKey
 }
 return
 

@@ -3,7 +3,6 @@ if !FileExist(PointerFile)
 	WritePointertoini(PointerFile)
 }
 
-
 if !FileExist(SpeedFile)
 {
 	Gosub, UpdateSpeedFile
@@ -21,11 +20,7 @@ if !FileExist(iniFile)
 	IniWrite,%FlyAccel%,%iniFile%,Values,FlyAccel
 	IniWrite,%SkipDistance%,%iniFile%,Values,SkipDistance
 
-	IniWrite,%SpeedKey%,%iniFile%,Hotkeys,SpeedKey
-	IniWrite,%FreezeKey%,%iniFile%,Hotkeys,FreezeKey
-	IniWrite,%yFreezeKey%,%iniFile%,Hotkeys,yFreezeKey
-	IniWrite,%FlyKey%,%iniFile%,Hotkeys,FlyKey
-	IniWrite,%SkipKey%,%iniFile%,Hotkeys,SkipKey
+	Gosub, SaveHotkeysToINI
 }
 
 ;------------------------
@@ -49,9 +44,5 @@ if FileExist(iniFile)
 	IniRead,FlyAccel,%iniFile%,Values,FlyAccel
 	IniRead,SkipDistance,%iniFile%,Values,SkipDistance
 
-	IniRead,SpeedKey,%iniFile%,Hotkeys,SpeedKey
-	IniRead,FreezeKey,%iniFile%,Hotkeys,FreezeKey
-	IniRead,yFreezeKey,%iniFile%,Hotkeys,yFreezeKey
-	IniRead,FlyKey,%iniFile%,Hotkeys,FlyKey
-	IniRead,SkipKey,%iniFile%,Hotkeys,SkipKey
+	Gosub, LoadHotkeysFromINI
 }
