@@ -12,7 +12,7 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.1"
+global ScriptVersion := "1.2"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 ;TempSpeedFile = %A_Temp%\SpeedValue.txt
@@ -180,6 +180,7 @@ SplashTextOn,200,25,% ScriptName " v" ScriptVersion,% "Building GUI..."
 
 Gosub, ToolTip
 Gosub, InitHotkeys
+Gosub, refreshAdress
 SplashTextOff
 return
 

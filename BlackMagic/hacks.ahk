@@ -128,3 +128,13 @@ if (EnableFloat == 1)
 	SetTimer, Float, -10
 }
 return
+
+;------------------------
+;Stop if Adreess Changed:
+;------------------------
+
+DisableHacksAtAdressChanged:
+EnableFloat := 0
+EnableyFreeze := 0
+EnableFreeze := 0
+return

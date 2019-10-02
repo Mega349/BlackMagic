@@ -1,37 +1,13 @@
-ToolTip:
-if(WinActive("ahk_exe Trove.exe") && ShowTooltip == 1)
-{
-    ToolTipString := "PID = " PID
-    if (EnableSpeed == 1)
-	{
-        ToolTipString := ToolTipString "`n" "Speed Hack = " SpeedDispValue[Speed] "ms"
-	}
-	if (EnableyFreeze == 1)
-	{
-        ToolTipString := ToolTipString "`n" "Freeze High = ON"
-	}
-	if (EnableFreeze == 1)
-	{
-        ToolTipString := ToolTipString "`n" "Freeze Position = ON"
-	}
-	if (EnableFloat == 1)
-	{
-        ToolTipString := ToolTipString "`n" "Float = ON"
-	}
-	ToolTip, %ToolTipString%, 0, 0, 1
-}
-else
-{
-	ToolTip,,,,1
-}
-SetTimer, ToolTip, -70
-return
-
 CheckTroveWindow:
 WinGet, PID, PID, ahk_exe Trove.exe
 WinGet, hwnd, ID, ahk_pid %PID%
 Base := getProcessBaseAddress(hwnd)
 
+Gosub, getAdress
+oldySkipAddress := ySkipAddress
+return
+
+getAdress:
 xSkipAddress := GetAddress(PID, Base, SkipBase, xSkipOffsetString)
 ySkipAddress := GetAddress(PID, Base, SkipBase, ySkipOffsetString)
 zSkipAddress := GetAddress(PID, Base, SkipBase, zSkipOffsetString)
@@ -118,3 +94,49 @@ ExitApp
 
 ExitScript: ;wird durch "ExitFunktion()" aufgerufen zum beenden einfach den "ExitApp"-Befehl verwenden
 ExitApp
+
+;------------------------
+;SetTimer Subs:
+;------------------------
+
+ToolTip:
+if(WinActive("ahk_exe Trove.exe") && ShowTooltip == 1)
+{
+    ToolTipString := "PID = " PID
+    if (EnableSpeed == 1)
+	{
+        ToolTipString := ToolTipString "`n" "Speed Hack = " SpeedDispValue[Speed] "ms"
+	}
+	if (EnableyFreeze == 1)
+	{
+        ToolTipString := ToolTipString "`n" "Freeze High = ON"
+	}
+	if (EnableFreeze == 1)
+	{
+        ToolTipString := ToolTipString "`n" "Freeze Position = ON"
+	}
+	if (EnableFloat == 1)
+	{
+        ToolTipString := ToolTipString "`n" "Float = ON"
+	}
+	ToolTip, %ToolTipString%, 0, 0, 1
+}
+else
+{
+	ToolTip,,,,1
+}
+SetTimer, ToolTip, -70
+return
+
+refreshAdress:
+Gosub, getAdress
+
+if (oldySkipAddress != ySkipAddress)
+{
+	Gosub, DisableHacksAtAdressChanged
+}
+
+oldySkipAddress := ySkipAddress
+
+SetTimer, refreshAdress, -3000
+return
