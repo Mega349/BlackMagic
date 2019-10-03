@@ -4,18 +4,18 @@
 
 ViewSkip:
 Gosub, CheckTroveWindow
-xcurrentpos := HexToFloat(ReadMemory(xSkipAddress, PID))
-ycurrentpos := HexToFloat(ReadMemory(ySkipAddress, PID))
-zcurrentpos := HexToFloat(ReadMemory(zSkipAddress, PID))
-xcurrentView := HexToFloat(ReadMemory(xViewAddress, PID))
-ycurrentView := HexToFloat(ReadMemory(yViewAddress, PID))
-zcurrentView := HexToFloat(ReadMemory(zViewAddress, PID))
-xnewpos := xcurrentpos + (xcurrentView * SkipDistance)
-ynewpos := ycurrentpos + (ycurrentView * SkipDistance)
-znewpos := zcurrentpos + (zcurrentView * SkipDistance)
-WriteProcessMemory(pid, xSkipAddress, FloatToHex(xnewpos))
-WriteProcessMemory(pid, ySkipAddress, FloatToHex(ynewpos))
-WriteProcessMemory(pid, zSkipAddress, FloatToHex(znewpos))
+xSkipCurrentPos := HexToFloat(ReadMemory(xSkipAddress, PID))
+ySkipCurrentPos := HexToFloat(ReadMemory(ySkipAddress, PID))
+zSkipCurrentPos := HexToFloat(ReadMemory(zSkipAddress, PID))
+xSkipCurrentView := HexToFloat(ReadMemory(xViewAddress, PID))
+ySkipCurrentView := HexToFloat(ReadMemory(yViewAddress, PID))
+zSkipCurrentView := HexToFloat(ReadMemory(zViewAddress, PID))
+xSkipNewPos := xSkipCurrentPos + (xSkipCurrentView * SkipDistance)
+ySkipNewPos := ySkipCurrentPos + (ySkipCurrentView * SkipDistance)
+zSkipNewPos := zSkipCurrentPos + (zSkipCurrentView * SkipDistance)
+WriteProcessMemory(pid, xSkipAddress, FloatToHex(xSkipNewPos))
+WriteProcessMemory(pid, ySkipAddress, FloatToHex(ySkipNewPos))
+WriteProcessMemory(pid, zSkipAddress, FloatToHex(zSkipNewPos))
 sleep, 100
 return
 
@@ -25,15 +25,15 @@ return
 
 AccelerationFly:
 Gosub, CheckTroveWindow
-xcurrentView := HexToFloat(ReadMemory(xViewAddress, PID))
-ycurrentView := HexToFloat(ReadMemory(yViewAddress, PID))
-zcurrentView := HexToFloat(ReadMemory(zViewAddress, PID))
-xnewAccel := xcurrentView * FlyAccel
-ynewAccel := ycurrentView * FlyAccel
-znewAccel := zcurrentView * FlyAccel
-WriteProcessMemory(pid, xAccelerationAddress, FloatToHex(xnewAccel))
-WriteProcessMemory(pid, yAccelerationAddress, FloatToHex(ynewAccel))
-WriteProcessMemory(pid, zAccelerationAddress, FloatToHex(znewAccel))
+xFlyCurrentView := HexToFloat(ReadMemory(xViewAddress, PID))
+yFlyCurrentView := HexToFloat(ReadMemory(yViewAddress, PID))
+zFlyCurrentView := HexToFloat(ReadMemory(zViewAddress, PID))
+xFlyNewAccel := xFlyCurrentView * FlyAccel
+yFlyNewAccel := yFlyCurrentView * FlyAccel
+zFlyNewAccel := zFlyCurrentView * FlyAccel
+WriteProcessMemory(pid, xAccelerationAddress, FloatToHex(xFlyNewAccel))
+WriteProcessMemory(pid, yAccelerationAddress, FloatToHex(yFlyNewAccel))
+WriteProcessMemory(pid, zAccelerationAddress, FloatToHex(zFlyNewAccel))
 sleep, 20
 return
 
@@ -130,11 +130,41 @@ if (EnableFloat == 1)
 return
 
 ;------------------------
+;Super Jump:
+;------------------------
+
+StartSuperJump:
+Gosub, CheckTroveWindow
+EnableSuperJump := 1
+Gosub, SuperJump
+return
+
+StopSuperJump:
+EnableSuperJump := 0
+return
+
+SuperJump:
+if (EnableSuperJump == 1)
+{
+	if (GetKeyState("Space", P))
+	{
+		ySuperJumpCurrentAccel := HexToFloat(ReadMemory(yAccelerationAddress, PID))
+	}
+	if (ySuperJumpCurrentAccel > 8) ;dont Jump if Writing in Chat or something else
+	{
+		WriteProcessMemory(pid, yAccelerationAddress, FloatToHex(SuperJumpAccel))
+		ySuperJumpCurrentAccel := 0
+	}
+	SetTimer, SuperJump, -5
+}
+return
+
+;------------------------
 ;Stop if Adreess Changed:
 ;------------------------
 
 DisableHacksAtAdressChanged:
-EnableFloat := 0
-EnableyFreeze := 0
-EnableFreeze := 0
+Gosub, StopFloat
+Gosub, StopyFreeze
+Gosub, StopFreeze
 return

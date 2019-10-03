@@ -51,7 +51,8 @@ EnableUpdateCheck := 1
 ShowTooltip := 1
 LastSpeed := 1
 FlyAccel := 20
-SkipDistance:= 3.5
+SkipDistance := 3.5
+SuperJumpAccel := 20
 
 ;default Keys
 SpeedKey = ^k
@@ -59,7 +60,8 @@ FreezeKey = ^p
 yFreezeKey = ^l
 FlyKey = ^w
 SkipKey = MButton
-FloatKEy = ^f
+FloatKey = ^f
+SuperJumpKey = ^m
 
 ;Internal Vars
 SplitSpeed := []

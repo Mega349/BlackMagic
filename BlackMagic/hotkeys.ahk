@@ -54,6 +54,17 @@ Else
 }
 return
 
+PressedSuperJumpkey:
+if (EnableSuperJump != 1)
+{
+    Gosub, StartSuperJump
+}
+Else
+{
+    Gosub, StopSuperJump
+}
+return
+
 ;------------------------
 ;Subs for Hotkeys at GUI:
 ;------------------------
@@ -66,6 +77,7 @@ IniWrite,%FreezeKey%,%iniFile%,Hotkeys,FreezeKey
 IniWrite,%yFreezeKey%,%iniFile%,Hotkeys,yFreezeKey
 IniWrite,%FlyKey%,%iniFile%,Hotkeys,FlyKey
 IniWrite,%FloatKey%,%iniFile%,Hotkeys,FloatKey
+IniWrite,%SuperJumpKey%,%iniFile%,Hotkeys,SuperJumpKey
 return
 
 LoadHotkeysFromINI:
@@ -75,6 +87,7 @@ IniRead,FreezeKey,%iniFile%,Hotkeys,FreezeKey
 IniRead,yFreezeKey,%iniFile%,Hotkeys,yFreezeKey
 IniRead,FlyKey,%iniFile%,Hotkeys,FlyKey
 IniRead,FloatKey,%iniFile%,Hotkeys,FloatKey
+IniRead,SuperJumpKey,%iniFile%,Hotkeys,SuperJumpKey
 return
 
 SaveHotkeys:
@@ -86,6 +99,7 @@ GuiControlGet,FreezeKey,,FreezeKey
 GuiControlGet,yFreezeKey,,yFreezeKey
 GuiControlGet,FlyKey,,FlyKey
 GuiControlGet,FloatKey,,FloatKey
+GuiControlGet,SuperJumpKey,,SuperJumpKey
 
 Gosub, SaveHotkeysToINI
 Gosub, LoadHotkeysFromINI
@@ -98,11 +112,11 @@ If !A_IsCompiled
     Hotkey, ^R, Restart
     Hotkey, ^T, ExitScript
 }
+
 if (SkipKey != "")
 {
     Hotkey, %SkipKey%, PressedSkipKey, on
 }
-
 
 if (SpeedKey != "")
 {
@@ -127,6 +141,11 @@ if (FlyKey != "")
 if (FloatKey != "")
 {
     Hotkey, %FloatKey%, PressedFloatKey, on
+}
+
+if (SuperjumpKey != "")
+{
+    Hotkey, %SuperJumpKey%, PressedSuperJumpkey, on
 }
 return
 
@@ -159,5 +178,10 @@ if (FlyKey != "")
 if (FloatKey != "")
 {
     Hotkey, %FloatKey%, PressedFloatKey, off
+}
+
+if (SuperjumpKey != "")
+{
+    Hotkey, %SuperJumpKey%, PressedSuperJumpkey, off
 }
 return

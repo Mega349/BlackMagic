@@ -19,6 +19,7 @@ if !FileExist(iniFile)
 
 	IniWrite,%FlyAccel%,%iniFile%,Values,FlyAccel
 	IniWrite,%SkipDistance%,%iniFile%,Values,SkipDistance
+	IniWrite,%SuperJumpAccel%,%iniFile%,Values,SuperJumpAccel
 
 	Gosub, SaveHotkeysToINI
 }
@@ -43,6 +44,7 @@ if FileExist(iniFile)
 
 	IniRead,FlyAccel,%iniFile%,Values,FlyAccel
 	IniRead,SkipDistance,%iniFile%,Values,SkipDistance
+	IniRead,SuperJumpAccel,%iniFile%,Values,SuperJumpAccel
 
 	Gosub, LoadHotkeysFromINI
 }
