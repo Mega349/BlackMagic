@@ -1,4 +1,4 @@
-# v1.2 WIP <br>
+# v1.2 <br>
 \+ Super Jump <br>
 \+ Disable **Freeze**, **yFreeze**, **Float** Hack on World change <br>
 \# Speedhack works now after World change <br>
