@@ -3,6 +3,7 @@ SetWorkingDir %A_ScriptDir%
 SendMode Input
 #SingleInstance force
 #WinActivateForce
+SetBatchLines -1
 SetTitleMatchMode, 3
 OnExit("ExitFunktion")
 
@@ -12,7 +13,7 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.3"
+global ScriptVersion := "1.3.1"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 ;TempSpeedFile = %A_Temp%\SpeedValue.txt

@@ -189,6 +189,7 @@ return
 ;------------------------
 
 StartAntiAFK:
+Gosub, CheckTroveWindow
 EnableAntiAFK := 1
 Gosub, AntiAFK
 return
@@ -200,10 +201,7 @@ return
 AntiAFK:
 if (EnableAntiAFK == 1)
 {
-	if(WinActive("ahk_exe Trove.exe"))
-	{	
-		send, %TroveAntiAFKKey%
-	}
+	ControlSend, ahk_parent, {%TroveAntiAFKKey%}, ahk_pid %PID%
 	SetTimer, AntiAFK, -%AntiAFKDelay%
 }
 return
