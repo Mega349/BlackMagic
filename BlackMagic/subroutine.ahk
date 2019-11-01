@@ -3,11 +3,11 @@ WinGet, PID, PID, ahk_exe Trove.exe
 WinGet, hwnd, ID, ahk_pid %PID%
 Base := getProcessBaseAddress(hwnd)
 
-Gosub, getAdress
+Gosub, getAddress
 oldySkipAddress := ySkipAddress
 return
 
-getAdress:
+getAddress:
 xSkipAddress := GetAddress(PID, Base, SkipBase, xSkipOffsetString)
 ySkipAddress := GetAddress(PID, Base, SkipBase, ySkipOffsetString)
 zSkipAddress := GetAddress(PID, Base, SkipBase, zSkipOffsetString)
@@ -67,6 +67,7 @@ GuiControlGet,Speed,,Speed
 GuiControlGet,FlyAccel,,FlyAccel
 GuiControlGet,SkipDistance,,SkipDistance
 GuiControlGet,SuperJumpAccel,,SuperJumpAccel
+GuiControlGet,FallManipulationAccel,,FallManipulationAccel
 
 IniWrite,%PointerAutoUpdate%,%iniFile%,General,PointerAutoUpdate
 IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
@@ -75,6 +76,7 @@ IniWrite,%Speed%,%iniFile%,General,LastSpeed
 IniWrite,%FlyAccel%,%iniFile%,Values,FlyAccel
 IniWrite,%SkipDistance%,%iniFile%,Values,SkipDistance
 IniWrite,%SuperJumpAccel%,%iniFile%,Values,SuperJumpAccel
+IniWrite,%FallManipulationAccel%,%iniFile%,Values,FallManipulationAccel
 return
 
 Updateini:
@@ -91,6 +93,16 @@ if (ConfigVersion < 3)
 	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
 	IniWrite,%SuperJumpKey%,%iniFile%,Hotkeys,SuperJumpKey
 	IniWrite,%SuperJumpAccel%,%iniFile%,Values,SuperJumpAccel
+}
+if (ConfigVersion < 4)
+{
+	ConfigVersion := 4
+	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
+	IniWrite,%TroveJumpKey%,%iniFile%,TroveHotkeys,TroveJumpKey
+	IniWrite,%TroveAntiAFKKey%,%iniFile%,TroveHotkeys,TroveAntiAFKKey
+	IniWrite,%FallManipulationKey%,%iniFile%,Hotkeys,FallManipulationKey
+	IniWrite,%AntiAFKKey%,%iniFile%,Hotkeys,AntiAFKKey
+	IniWrite,%FallManipulationAccel%,%iniFile%,Values,FallManipulationAccel
 }
 return
 
@@ -132,6 +144,14 @@ if(WinActive("ahk_exe Trove.exe") && ShowTooltip == 1)
 	{
         ToolTipString := ToolTipString "`n" "Super Jump = ON"
 	}
+	if (EnableFallManipulation == 1)
+	{
+        ToolTipString := ToolTipString "`n" "Fall manipulation = ON"
+	}
+	if (EnableAntiAFK == 1)
+	{
+    	ToolTipString := ToolTipString "`n" "Anti AFK = ON"
+	}
 	ToolTip, %ToolTipString%, 0, 0, 1
 }
 else
@@ -141,15 +161,15 @@ else
 SetTimer, ToolTip, -70
 return
 
-refreshAdress:
-Gosub, getAdress
+refreshAddress:
+Gosub, getAddress
 
 if (oldySkipAddress != ySkipAddress)
 {
-	Gosub, DisableHacksAtAdressChanged
+	Gosub, DisableHacksAtAddressChanged
 }
 
 oldySkipAddress := ySkipAddress
 
-SetTimer, refreshAdress, -1000
+SetTimer, refreshAddress, -1000
 return

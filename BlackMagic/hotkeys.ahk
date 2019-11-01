@@ -54,7 +54,7 @@ Else
 }
 return
 
-PressedSuperJumpkey:
+PressedSuperJumpKey:
 if (EnableSuperJump != 1)
 {
     Gosub, StartSuperJump
@@ -65,30 +65,31 @@ Else
 }
 return
 
+PressedFallManipulationKey:
+if (EnableFallManipulation != 1)
+{
+    Gosub, StartFallManipulation
+}
+Else
+{
+    Gosub, StopFallManipulation
+}
+return
+
+PressedAntiAFKKey:
+if (EnableAntiAFK != 1)
+{
+    Gosub, StartAntiAFK
+}
+Else
+{
+    Gosub, StopAntiAFK
+}
+return
+
 ;------------------------
 ;Subs for Hotkeys at GUI:
 ;------------------------
-
-
-SaveHotkeysToINI:
-IniWrite,%SkipKey%,%iniFile%,Hotkeys,SkipKey
-IniWrite,%SpeedKey%,%iniFile%,Hotkeys,SpeedKey
-IniWrite,%FreezeKey%,%iniFile%,Hotkeys,FreezeKey
-IniWrite,%yFreezeKey%,%iniFile%,Hotkeys,yFreezeKey
-IniWrite,%FlyKey%,%iniFile%,Hotkeys,FlyKey
-IniWrite,%FloatKey%,%iniFile%,Hotkeys,FloatKey
-IniWrite,%SuperJumpKey%,%iniFile%,Hotkeys,SuperJumpKey
-return
-
-LoadHotkeysFromINI:
-IniRead,SkipKey,%iniFile%,Hotkeys,SkipKey
-IniRead,SpeedKey,%iniFile%,Hotkeys,SpeedKey
-IniRead,FreezeKey,%iniFile%,Hotkeys,FreezeKey
-IniRead,yFreezeKey,%iniFile%,Hotkeys,yFreezeKey
-IniRead,FlyKey,%iniFile%,Hotkeys,FlyKey
-IniRead,FloatKey,%iniFile%,Hotkeys,FloatKey
-IniRead,SuperJumpKey,%iniFile%,Hotkeys,SuperJumpKey
-return
 
 SaveHotkeys:
 Gosub, DisableHotkeys
@@ -100,11 +101,94 @@ GuiControlGet,yFreezeKey,,yFreezeKey
 GuiControlGet,FlyKey,,FlyKey
 GuiControlGet,FloatKey,,FloatKey
 GuiControlGet,SuperJumpKey,,SuperJumpKey
+GuiControlGet,FallManipulationKey,,FallManipulationKey
+GuiControlGet,AntiAFKKey,,AntiAFKKey
 
 Gosub, SaveHotkeysToINI
 Gosub, LoadHotkeysFromINI
 Gosub, InitHotkeys
 return
+
+
+ResetHotkeys:
+MsgBox, 4, %ScriptName%,% "Reset BlackMagic Hotkeys?"
+IfMsgBox, Yes
+{
+    SpeedKey := defaultSpeedKey
+    FreezeKey := defaultFreezeKey
+    yFreezeKey := defaultyFreezeKey
+    FlyKey := defaultFlyKey
+    SkipKey := defaultSkipKey
+    FloatKey := defaultFloatKey
+    SuperJumpKey := defaultSuperJumpKey
+    FallManipulationKey := defaultFallManipulationKey
+    AntiAFKKey := defaultAntiAFKKey
+
+    Gosub, SaveHotkeysToINI
+    Gosub, Restart
+}
+return
+
+
+SaveTroveHotkeys:
+GuiControlGet,TroveJumpKey,,TroveJumpKey
+GuiControlGet,TroveAntiAFKKey,,TroveAntiAFKKey
+
+Gosub, SaveTroveHotkeysToINI
+Gosub, LoadTroveHotkeysFromINI
+return
+
+
+ResetTroveHotkeys:
+MsgBox, 4, %ScriptName%,% "Reset Trove Hotkeys?"
+IfMsgBox, Yes
+{
+    TroveJumpKey := defaultTroveJumpKey
+    TroveAntiAFKKey := defaultTroveAntiAFKKey
+
+    Gosub, SaveTroveHotkeysToINI
+    Gosub, Restart
+}
+return
+
+
+SaveTroveHotkeysToINI:
+IniWrite,%TroveJumpKey%,%iniFile%,TroveHotkeys,TroveJumpKey
+IniWrite,%TroveAntiAFKKey%,%iniFile%,TroveHotkeys,TroveAntiAFKKey
+return
+
+
+LoadTroveHotkeysFromINI:
+IniRead,TroveJumpKey,%iniFile%,TroveHotkeys,TroveJumpKey
+IniRead,TroveAntiAFKKey,%iniFile%,TroveHotkeys,TroveAntiAFKKey
+return
+
+
+SaveHotkeysToINI:
+IniWrite,%SkipKey%,%iniFile%,Hotkeys,SkipKey
+IniWrite,%SpeedKey%,%iniFile%,Hotkeys,SpeedKey
+IniWrite,%FreezeKey%,%iniFile%,Hotkeys,FreezeKey
+IniWrite,%yFreezeKey%,%iniFile%,Hotkeys,yFreezeKey
+IniWrite,%FlyKey%,%iniFile%,Hotkeys,FlyKey
+IniWrite,%FloatKey%,%iniFile%,Hotkeys,FloatKey
+IniWrite,%SuperJumpKey%,%iniFile%,Hotkeys,SuperJumpKey
+IniWrite,%FallManipulationKey%,%iniFile%,Hotkeys,FallManipulationKey
+IniWrite,%AntiAFKKey%,%iniFile%,Hotkeys,AntiAFKKey
+return
+
+
+LoadHotkeysFromINI:
+IniRead,SkipKey,%iniFile%,Hotkeys,SkipKey
+IniRead,SpeedKey,%iniFile%,Hotkeys,SpeedKey
+IniRead,FreezeKey,%iniFile%,Hotkeys,FreezeKey
+IniRead,yFreezeKey,%iniFile%,Hotkeys,yFreezeKey
+IniRead,FlyKey,%iniFile%,Hotkeys,FlyKey
+IniRead,FloatKey,%iniFile%,Hotkeys,FloatKey
+IniRead,SuperJumpKey,%iniFile%,Hotkeys,SuperJumpKey
+IniRead,FallManipulationKey,%iniFile%,Hotkeys,FallManipulationKey
+IniRead,AntiAFKKey,%iniFile%,Hotkeys,AntiAFKKey
+return
+
 
 InitHotkeys:
 If !A_IsCompiled
@@ -145,9 +229,20 @@ if (FloatKey != "")
 
 if (SuperjumpKey != "")
 {
-    Hotkey, %SuperJumpKey%, PressedSuperJumpkey, on
+    Hotkey, %SuperJumpKey%, PressedSuperJumpKey, on
+}
+
+if (FallManipulationKey != "")
+{
+    Hotkey, %FallManipulationKey%, PressedFallManipulationKey, on
+}
+
+if (AntiAFKKey != "")
+{
+    Hotkey, %AntiAFKKey%, PressedAntiAFKKey, on
 }
 return
+
 
 DisableHotkeys:
 if (SkipKey != "")
@@ -182,6 +277,6 @@ if (FloatKey != "")
 
 if (SuperjumpKey != "")
 {
-    Hotkey, %SuperJumpKey%, PressedSuperJumpkey, off
+    Hotkey, %SuperJumpKey%, PressedAntiAFKKey, off
 }
 return

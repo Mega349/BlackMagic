@@ -1,4 +1,4 @@
-Gui,Add,Tab,w300 h295, Settings|Hotkeys
+Gui,Add,Tab,w300 h340, Settings|BlackMagic Hotkeys|Trove Hotkeys
 
 Gui,Show,,%ScriptName% v%ScriptVersion% | %LastUpdateSupport%
 
@@ -60,7 +60,14 @@ Gui, Add, Text, xp+35 yp+2 cgreen, up speed while Jumping
 
 Gui, Add, Text, x22 yp+19,--------------------------------------------------------------------------------------------
 
+Gui, Add, Text, xp yp+16, Fall man. Accel.:
+Gui, Add, Edit, xp+90 yp-2 w30 vFallManipulationAccel gSave, %FallManipulationAccel%
+Gui, Add, Text, xp+35 yp+2 cgreen, down speed while Falling
+
+Gui, Add, Text, x22 yp+19,--------------------------------------------------------------------------------------------
+
 Gui, Add, Text, x22 yp+16 cgreen, Freeze High is useful for infinite flying
+
 
 Gui,Tab,2
 Gui, Add, Text, x22 y35, Skip (Teleport):
@@ -91,9 +98,35 @@ Gui, Add, Text, x22 yp+25, Super Jump:
 Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vSuperJumpKey, %SuperJumpKey%
 Gui, Add, Text, xp+85 yp+2, default = CTRL + M
 
-Gui, Add, Button, x112 yp+25 gSaveHotkeys, Save
+Gui, Add, Text, x22 yp+25, Fall manipulation:
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vFallManipulationKey, %FallManipulationKey%
+Gui, Add, Text, xp+85 yp+2, default = CTRL + G
 
-Gui, Add, Text,x22 yp+30 cblue, You NEED "Space" as Default Jump Key for Super Jump
-Gui, Add, Text,x22 yp+15 cgreen, MButton = Pressed Mouse Wheel
+Gui, Add, Text, x22 yp+25, Anti AFK:
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vAntiAFKKey, %AntiAFKKey%
+Gui, Add, Text, xp+85 yp+2, default = CTRL + H
+
+Gui, Add, Button, x112 yp+25 gSaveHotkeys, Save
+Gui, Add, Button, x+3 yp gResetHotkeys, Reset
+
+Gui, Add, Text,x22 yp+35 cgreen, MButton = Pressed Mouse Wheel
+Gui, Add, Text,x22 yp+15 cred, Controller or Mouse Buttons cant be set or displayed here!
+Gui, Add, Text,x22 yp+15 cred, set/change "special Buttons" at "%Inifile%"
+
+
+Gui,Tab,3
+Gui, Add, Text, x22 y35, Default Jump Key:
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vTroveJumpKey, %TroveJumpKey%
+Gui, Add, Text, xp+85 yp+2, default = Space
+
+Gui, Add, Text, x22 yp+25, Anti AFK Key:
+Gui, Add, Hotkey,xp+90 yp-2 w80 h20 vTroveAntiAFKKey, %TroveAntiAFKKey%
+Gui, Add, Text, xp+85 yp+2, default = M
+
+Gui, Add, Button, x112 yp+25 gSaveTroveHotkeys, Save
+Gui, Add, Button, x+3 yp gResetTroveHotkeys, Reset
+
+Gui, Add, Text,x22 yp+35 cblue, Default Jump Key is required by Super Jump
+Gui, Add, Text,x22 yp+15 cblue, "Space" cant be set but displayed here!
 Gui, Add, Text,x22 yp+15 cred, Controller or Mouse Buttons cant be set or displayed here!
 Gui, Add, Text,x22 yp+15 cred, set/change "special Buttons" at "%Inifile%"

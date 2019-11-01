@@ -1,4 +1,4 @@
 
-BlackMagic/blackconfig.ini
-BlackMagic/SpeedValue.txt
-BlackMagic/pointer.ini
+*.ini
+*.back
+*.txt

@@ -12,7 +12,7 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.2"
+global ScriptVersion := "1.3"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 ;TempSpeedFile = %A_Temp%\SpeedValue.txt
@@ -53,6 +53,8 @@ LastSpeed := 1
 FlyAccel := 20
 SkipDistance := 3.5
 SuperJumpAccel := 20
+FallManipulationAccel := -3
+
 
 ;default Keys
 SpeedKey = ^k
@@ -62,6 +64,29 @@ FlyKey = ^w
 SkipKey = MButton
 FloatKey = ^f
 SuperJumpKey = ^m
+FallManipulationKey = ^g
+AntiAFKKey = ^h
+
+
+;default Trove Keys
+TroveJumpKey = space
+TroveAntiAFKKey = m
+
+
+;backup default Keys
+defaultSpeedKey := SpeedKey
+defaultFreezeKey := FreezeKey
+defaultyFreezeKey := yFreezeKey
+defaultFlyKey := FlyKey
+defaultSkipKey := SkipKey
+defaultFloatKey := FloatKey
+defaultSuperJumpKey := SuperJumpKey
+defaultFallManipulationKey := FallManipulationKey
+defaultAntiAFKKey := AntiAFKKey
+
+defaultTroveJumpKey := TroveJumpKey
+defaultTroveAntiAFKKey := TroveAntiAFKKey
+
 
 ;Internal Vars
 SplitSpeed := []
@@ -69,6 +94,7 @@ SpeedString := []
 SpeedValue := []
 SpeedDispValue := []
 SpeedValueString := []
+AntiAFKDelay := 2500
 
 ;------------------------
 ;Start:
@@ -182,7 +208,7 @@ SplashTextOn,200,25,% ScriptName " v" ScriptVersion,% "Building GUI..."
 
 Gosub, ToolTip
 Gosub, InitHotkeys
-Gosub, refreshAdress
+Gosub, refreshAddress
 SplashTextOff
 return
 

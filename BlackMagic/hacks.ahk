@@ -146,13 +146,13 @@ return
 SuperJump:
 if (EnableSuperJump == 1)
 {
-	if (GetKeyState("Space", P))
+	if (GetKeyState(TroveJumpKey, P))
 	{
 		ySuperJumpCurrentAccel := HexToFloat(ReadMemory(yAccelerationAddress, PID))
 	}
 	if (ySuperJumpCurrentAccel > 8) ;dont Jump if Writing in Chat or something else
 	{
-		WriteProcessMemory(pid, yAccelerationAddress, FloatToHex(SuperJumpAccel))
+		WriteProcessMemory(PID, yAccelerationAddress, FloatToHex(SuperJumpAccel))
 		ySuperJumpCurrentAccel := 0
 	}
 	SetTimer, SuperJump, -5
@@ -160,11 +160,61 @@ if (EnableSuperJump == 1)
 return
 
 ;------------------------
-;Stop if Adreess Changed:
+;Fall Manipulation:
 ;------------------------
 
-DisableHacksAtAdressChanged:
+StartFallManipulation:
+Gosub, CheckTroveWindow
+EnableFallManipulation := 1
+Gosub, FallManipulation
+return
+
+StopFallManipulation:
+EnableFallManipulation := 0
+return
+
+FallManipulation:
+if (EnableFallManipulation == 1)
+{
+	if (HexToFloat(ReadMemory(yAccelerationAddress, PID)) < 0 )
+	{
+		WriteProcessMemory(PID, yAccelerationAddress, FloatToHex(FallManipulationAccel))
+	}
+	SetTimer, FallManipulation, -5
+}
+return
+
+;------------------------
+;Anti AFK:
+;------------------------
+
+StartAntiAFK:
+EnableAntiAFK := 1
+Gosub, AntiAFK
+return
+
+StopAntiAFK:
+EnableAntiAFK := 0
+return
+
+AntiAFK:
+if (EnableAntiAFK == 1)
+{
+	if(WinActive("ahk_exe Trove.exe"))
+	{	
+		send, %TroveAntiAFKKey%
+	}
+	SetTimer, AntiAFK, -%AntiAFKDelay%
+}
+return
+
+;------------------------
+;Stop if Address Changed:
+;------------------------
+
+DisableHacksAtAddressChanged:
 Gosub, StopFloat
 Gosub, StopyFreeze
 Gosub, StopFreeze
+Gosub, StopAntiAFK
 return

@@ -1,3 +1,10 @@
+# v1.3 <br>
+\+ Anti AFK <br>
+\+ Fall manipulation <br>
+\+ Resetbutton for Hotkeys <br>
+\+ Changeable Hotkey for SuperJump <br>
+\+ GUI Tab for Trove Hotkeys <br>
+
 # v1.2 <br>
 \+ Super Jump <br>
 \+ Disable **Freeze**, **yFreeze**, **Float** Hack on World change <br>
