@@ -1,3 +1,6 @@
+# v1.3.1 <br>
+\# Trove can now be minimized <br>
+
 # v1.3 <br>
 \+ Anti AFK <br>
 \+ Fall manipulation <br>

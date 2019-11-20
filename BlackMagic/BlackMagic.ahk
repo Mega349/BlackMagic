@@ -16,7 +16,6 @@ global ScriptName := "BlackMagic"
 global ScriptVersion := "1.3.1"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
-;TempSpeedFile = %A_Temp%\SpeedValue.txt
 PointerHostFile := "https://webtrash.lima-city.de/Trove_Pointer_Host.ini"
 SpeedHostFile := "https://webtrash.lima-city.de/SpeedValue.txt"
 VersionsFile := "https://webtrash.lima-city.de/Versions.ini"
@@ -46,7 +45,7 @@ global zViewOffsetString := "0x0+0x0+0x0+0x0+0x0"
 global SpeedBase := "0x00000000"
 global SpeedOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
-;Config Vars
+;default Config
 PointerAutoUpdate := 1
 EnableUpdateCheck := 1
 ShowTooltip := 1
