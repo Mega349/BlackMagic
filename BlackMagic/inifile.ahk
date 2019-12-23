@@ -1,3 +1,4 @@
+loadINI:
 if !FileExist(PointerFile)
 {
 	WritePointertoini(PointerFile)
@@ -20,6 +21,9 @@ if !FileExist(iniFile)
 	IniWrite,%FlyAccel%,%iniFile%,Values,FlyAccel
 	IniWrite,%SkipDistance%,%iniFile%,Values,SkipDistance
 	IniWrite,%SuperJumpAccel%,%iniFile%,Values,SuperJumpAccel
+	IniWrite,%FallManipulationAccel%,%iniFile%,Values,FallManipulationAccel
+	IniWrite,%minCamDistance%,%iniFile%,Values,minCamDistance
+	IniWrite,%maxCamDistance%,%iniFile%,Values,maxCamDistance
 
 	Gosub, SaveHotkeysToINI
 	Gosub, SaveTroveHotkeysToINI
@@ -47,7 +51,103 @@ if FileExist(iniFile)
 	IniRead,SkipDistance,%iniFile%,Values,SkipDistance
 	IniRead,SuperJumpAccel,%iniFile%,Values,SuperJumpAccel
 	IniRead,FallManipulationAccel,%iniFile%,Values,FallManipulationAccel
+	IniRead,minCamDistance,%iniFile%,Values,minCamDistance
+	IniRead,maxCamDistance,%iniFile%,Values,maxCamDistance
 
 	Gosub, LoadHotkeysFromINI
 	Gosub, LoadTroveHotkeysFromINI
 }
+Return
+
+WritePointertoini(ini)
+{
+	if (LastUpdateSupport != "ERROR")
+	{
+		IniWrite,%LastUpdateSupport%,%ini%,date,LastUpdateSupport
+
+		IniWrite,%SkipBase%,%ini%,skip,Base
+		IniWrite,%xSkipOffsetString%,%ini%,skip,xOffsets
+		IniWrite,%ySkipOffsetString%,%ini%,skip,yOffsets
+		IniWrite,%zSkipOffsetString%,%ini%,skip,zOffsets
+		IniWrite,%AccelerationBase%,%ini%,acceleration,Base
+		IniWrite,%xAccelerationOffsetString%,%ini%,acceleration,xOffsets
+		IniWrite,%yAccelerationOffsetString%,%ini%,acceleration,yOffsets
+		IniWrite,%zAccelerationOffsetString%,%ini%,acceleration,zOffsets
+		IniWrite,%ViewBase%,%ini%,view,Base
+		IniWrite,%xViewOffsetString%,%ini%,view,xOffsets
+		IniWrite,%yViewOffsetString%,%ini%,view,yOffsets
+		IniWrite,%zViewOffsetString%,%ini%,view,zOffsets
+		IniWrite,%SpeedBase%,%ini%,speed,Base
+		IniWrite,%SpeedOffsetString%,%ini%,speed,Offsets
+		IniWrite,%CDBase%,%ini%,camera_Distance,Base
+		IniWrite,%currentCDOffsetString%,%ini%,camera_Distance,currentOffset
+		IniWrite,%minCDOffsetString%,%ini%,camera_Distance,minOffset
+		IniWrite,%maxCDOffsetString%,%ini%,camera_Distance,maxOffset
+
+		state := TRUE
+	}
+	else
+	{
+		state := FALSE
+	}
+	
+	return state
+}
+
+ReadPointerfromini(ini)
+{
+	IniRead,LastUpdateSupport,%ini%,date,LastUpdateSupport
+
+	IniRead,SkipBase,%ini%,skip,Base
+	IniRead,xSkipOffsetString,%ini%,skip,xOffsets
+	IniRead,ySkipOffsetString,%ini%,skip,yOffsets
+	IniRead,zSkipOffsetString,%ini%,skip,zOffsets
+	IniRead,AccelerationBase,%ini%,acceleration,Base
+	IniRead,xAccelerationOffsetString,%ini%,acceleration,xOffsets
+	IniRead,yAccelerationOffsetString,%ini%,acceleration,yOffsets
+	IniRead,zAccelerationOffsetString,%ini%,acceleration,zOffsets
+	IniRead,ViewBase,%ini%,view,Base
+	IniRead,xViewOffsetString,%ini%,view,xOffsets
+	IniRead,yViewOffsetString,%ini%,view,yOffsets
+	IniRead,zViewOffsetString,%ini%,view,zOffsets
+	IniRead,SpeedBase,%ini%,speed,Base
+	IniRead,SpeedOffsetString,%ini%,speed,Offsets
+	IniRead,CDBase,%ini%,camera_Distance,Base
+	IniRead,currentCDOffsetString,%ini%,camera_Distance,currentOffset
+	IniRead,minCDOffsetString,%ini%,camera_Distance,minOffset
+	IniRead,maxCDOffsetString,%ini%,camera_Distance,maxOffset
+}
+
+Updateini:
+if (ConfigVersion < 2 || ConfigVersion == "" || ConfigVersion == "ERROR")
+{
+	ConfigVersion := 2
+	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
+	IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
+	IniWrite,%FloatKey%,%iniFile%,Hotkeys,FloatKey
+}
+if (ConfigVersion < 3)
+{
+	ConfigVersion := 3
+	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
+	IniWrite,%SuperJumpKey%,%iniFile%,Hotkeys,SuperJumpKey
+	IniWrite,%SuperJumpAccel%,%iniFile%,Values,SuperJumpAccel
+}
+if (ConfigVersion < 4)
+{
+	ConfigVersion := 4
+	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
+	IniWrite,%TroveJumpKey%,%iniFile%,TroveHotkeys,TroveJumpKey
+	IniWrite,%TroveAntiAFKKey%,%iniFile%,TroveHotkeys,TroveAntiAFKKey
+	IniWrite,%FallManipulationKey%,%iniFile%,Hotkeys,FallManipulationKey
+	IniWrite,%AntiAFKKey%,%iniFile%,Hotkeys,AntiAFKKey
+	IniWrite,%FallManipulationAccel%,%iniFile%,Values,FallManipulationAccel
+}
+if (ConfigVersion < 5)
+{
+	ConfigVersion := 5
+	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
+	IniWrite,%minCamDistance%,%iniFile%,Values,minCamDistance
+	IniWrite,%maxCamDistance%,%iniFile%,Values,maxCamDistance
+}
+return

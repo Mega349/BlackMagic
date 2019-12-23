@@ -1,3 +1,4 @@
+GUI:
 Gui,Add,Tab,w300 h340, Settings|BlackMagic Hotkeys|Trove Hotkeys
 
 Gui,Show,,%ScriptName% v%ScriptVersion% | %LastUpdateSupport%
@@ -33,7 +34,7 @@ else
 
 Gui, Add, Text, x22 yp+13,--------------------------------------------------------------------------------------------
 
-Gui, Add, Text, x22 yp+16 cred, You have to update after an Trove update.
+Gui, Add, Text, x22 yp+16 cred, You have to update the list after an Trove update.
 Gui, Add, Text, xp yp+20 cgreen, You can add valid values to "SpeedValue" if you know how.
 Gui, Add, Text, xp yp+25, Speed Value:
 Gui, Add, DropDownList, xp+80 yp-2 w50 AltSubmit Choose%Speed% vSpeed gSave, %SpeedValueString%
@@ -43,30 +44,34 @@ Gui, Add, Button,xp+66 yp gRestoreSpeedFile, Restore list
 Gui, Add, Text, x22 yp+22,--------------------------------------------------------------------------------------------
 
 Gui, Add, Text, xp yp+16, Fly Acceleration:
-Gui, Add, Edit, xp+90 yp-3 w30 vFlyAccel gSave, %FlyAccel%
+Gui, Add, Edit, xp+94 yp-3 vFlyAccel gSave, %FlyAccel%
 Gui, Add, Text, xp+35 yp+3 cgreen, For the best result, use wings.
 
 Gui, Add, Text, x22 yp+19,--------------------------------------------------------------------------------------------
 
 Gui, Add, Text, xp yp+16, Skip Distance:
-Gui, Add, Edit, xp+90 yp-2 w30 vSkipDistance gSave, %SkipDistance%
+Gui, Add, Edit, xp+94 yp-2 vSkipDistance gSave, %SkipDistance%
 Gui, Add, Text, xp+35 yp+2 cgreen, Teleport over a few blocks
 
 Gui, Add, Text, x22 yp+19,--------------------------------------------------------------------------------------------
 
 Gui, Add, Text, xp yp+16, Super Jump Accel.:
-Gui, Add, Edit, xp+90 yp-2 w30 vSuperJumpAccel gSave, %SuperJumpAccel%
+Gui, Add, Edit, xp+94 yp-2 vSuperJumpAccel gSave, %SuperJumpAccel%
 Gui, Add, Text, xp+35 yp+2 cgreen, up speed while Jumping
 
 Gui, Add, Text, x22 yp+19,--------------------------------------------------------------------------------------------
 
 Gui, Add, Text, xp yp+16, Fall man. Accel.:
-Gui, Add, Edit, xp+90 yp-2 w30 vFallManipulationAccel gSave, %FallManipulationAccel%
+Gui, Add, Edit, xp+94 yp-2 vFallManipulationAccel gSave, %FallManipulationAccel%
 Gui, Add, Text, xp+35 yp+2 cgreen, down speed while Falling
 
 Gui, Add, Text, x22 yp+19,--------------------------------------------------------------------------------------------
 
-Gui, Add, Text, x22 yp+16 cgreen, Freeze High is useful for infinite flying
+Gui, Add, Text, xp yp+16, Cam. Distance limit:
+Gui, Add, Edit, xp+94 yp-2 vminCamDistance gSave, %minCamDistance%
+Gui, Add, Text, xp+35 yp+2, to
+Gui, Add, Edit, xp+15 yp-2 vmaxCamDistance gSave, %maxCamDistance%
+Gui, Add, Text, xp+35 yp+2 cgreen, self explanatory
 
 
 Gui,Tab,2
@@ -130,3 +135,13 @@ Gui, Add, Text,x22 yp+35 cblue, Default Jump Key is required by Super Jump
 Gui, Add, Text,x22 yp+15 cblue, "Space" cant be set but displayed here!
 Gui, Add, Text,x22 yp+15 cred, Controller or Mouse Buttons cant be set or displayed here!
 Gui, Add, Text,x22 yp+15 cred, set/change "special Buttons" at "%Inifile%"
+return
+
+refreshInputBox:
+GuiControl, move, FlyAccel, w30
+GuiControl, move, SkipDistance, w30
+GuiControl, move, SuperJumpAccel, w30
+GuiControl, move, FallManipulationAccel, w30
+GuiControl, move, minCamDistance, w30
+GuiControl, move, maxCamDistance, w30
+return

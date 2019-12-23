@@ -150,7 +150,7 @@ if (EnableSuperJump == 1)
 	{
 		ySuperJumpCurrentAccel := HexToFloat(ReadMemory(yAccelerationAddress, PID))
 	}
-	if (ySuperJumpCurrentAccel > 8) ;dont Jump if Writing in Chat or something else
+	if (ySuperJumpCurrentAccel > 8) ;dont jump if writing in chat or something else
 	{
 		WriteProcessMemory(PID, yAccelerationAddress, FloatToHex(SuperJumpAccel))
 		ySuperJumpCurrentAccel := 0
@@ -207,12 +207,23 @@ if (EnableAntiAFK == 1)
 return
 
 ;------------------------
-;Stop if Address Changed:
+;Custom Cam Distance Limit:
 ;------------------------
 
-DisableHacksAtAddressChanged:
+CustomCamDistanceLimit:
+WriteProcessMemory(PID, minCDAdress, FloatToHex(minCamDistance))
+WriteProcessMemory(PID, maxCDAdress, FloatToHex(maxCamDistance))
+return
+
+;------------------------
+;Run once at Address Change:
+;------------------------
+
+runAtAddressChange:
 Gosub, StopFloat
 Gosub, StopyFreeze
 Gosub, StopFreeze
 Gosub, StopAntiAFK
+
+Gosub, CustomCamDistanceLimit
 return

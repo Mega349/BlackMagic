@@ -13,7 +13,7 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.3.1"
+global ScriptVersion := "1.4.0"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 PointerHostFile := "https://webtrash.lima-city.de/Trove_Pointer_Host.ini"
@@ -45,6 +45,13 @@ global zViewOffsetString := "0x0+0x0+0x0+0x0+0x0"
 global SpeedBase := "0x00000000"
 global SpeedOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
+;CD = Camera Distance
+global CDBase := "0x00000000"
+global currentCDOffsetString := "0x0+0x0" ;unused, will be added later
+global minCDOffsetString := "0x0+0x0"
+global maxCDOffsetString := "0x0+0x0"
+
+
 ;default Config
 PointerAutoUpdate := 1
 EnableUpdateCheck := 1
@@ -54,6 +61,8 @@ FlyAccel := 20
 SkipDistance := 3.5
 SuperJumpAccel := 20
 FallManipulationAccel := -3
+minCamDistance := 1.5
+maxCamDistance := 4.2
 
 
 ;default Keys
@@ -113,14 +122,14 @@ if !A_IsAdmin
 		Run *RunAs %A_ScriptFullPath%
 		ExitApp
 	}
-	ExitApp ;ohne admin rechte fortfahren? - hier nein
+	ExitApp ;continue without Admin permissions? - here no
 }
 
 ;------------------------
 ;Create and Read INI File:
 ;------------------------
 
-#Include inifile.ahk
+Gosub, loadINI
 
 ;------------------------
 ;Auto Update:
@@ -200,7 +209,8 @@ if (EnableUpdateCheck == TRUE)
 ;------------------------
 
 SplashTextOn,200,25,% ScriptName " v" ScriptVersion,% "Building GUI..."
-#Include, GUI.ahk
+Gosub, GUI
+Gosub, refreshInputBox
 
 ;------------------------
 ;End Startup:
@@ -216,6 +226,8 @@ return
 ;funktions/hotkeys/subroutine:
 ;------------------------
 
+#Include, inifile.ahk
+#Include, GUI.ahk
 #Include, hotkeys.ahk
 #Include, subroutine.ahk
 #Include, hacks.ahk

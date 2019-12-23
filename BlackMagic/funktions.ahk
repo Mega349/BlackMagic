@@ -2,58 +2,7 @@
 ;own Functions:
 ;------------------------
 
-WritePointertoini(ini)
-{
-	if (LastUpdateSupport != "ERROR")
-	{
-		IniWrite,%LastUpdateSupport%,%ini%,date,LastUpdateSupport
-
-		IniWrite,%SkipBase%,%ini%,skip,Base
-		IniWrite,%xSkipOffsetString%,%ini%,skip,xOffsets
-		IniWrite,%ySkipOffsetString%,%ini%,skip,yOffsets
-		IniWrite,%zSkipOffsetString%,%ini%,skip,zOffsets
-		IniWrite,%AccelerationBase%,%ini%,acceleration,Base
-		IniWrite,%xAccelerationOffsetString%,%ini%,acceleration,xOffsets
-		IniWrite,%yAccelerationOffsetString%,%ini%,acceleration,yOffsets
-		IniWrite,%zAccelerationOffsetString%,%ini%,acceleration,zOffsets
-		IniWrite,%ViewBase%,%ini%,view,Base
-		IniWrite,%xViewOffsetString%,%ini%,view,xOffsets
-		IniWrite,%yViewOffsetString%,%ini%,view,yOffsets
-		IniWrite,%zViewOffsetString%,%ini%,view,zOffsets
-		IniWrite,%SpeedBase%,%ini%,speed,Base
-		IniWrite,%SpeedOffsetString%,%ini%,speed,Offsets
-
-		state := TRUE
-	}
-	else
-	{
-		state := FALSE
-	}
-	
-	return state
-}
-
-ReadPointerfromini(ini)
-{
-	IniRead,LastUpdateSupport,%ini%,date,LastUpdateSupport
-
-	IniRead,SkipBase,%ini%,skip,Base
-	IniRead,xSkipOffsetString,%ini%,skip,xOffsets
-	IniRead,ySkipOffsetString,%ini%,skip,yOffsets
-	IniRead,zSkipOffsetString,%ini%,skip,zOffsets
-	IniRead,AccelerationBase,%ini%,acceleration,Base
-	IniRead,xAccelerationOffsetString,%ini%,acceleration,xOffsets
-	IniRead,yAccelerationOffsetString,%ini%,acceleration,yOffsets
-	IniRead,zAccelerationOffsetString,%ini%,acceleration,zOffsets
-	IniRead,ViewBase,%ini%,view,Base
-	IniRead,xViewOffsetString,%ini%,view,xOffsets
-	IniRead,yViewOffsetString,%ini%,view,yOffsets
-	IniRead,zViewOffsetString,%ini%,view,zOffsets
-	IniRead,SpeedBase,%ini%,speed,Base
-	IniRead,SpeedOffsetString,%ini%,speed,Offsets
-}
-
-ReadFiletoArray(file) ;Index 0 = Anzahl Zeilen | Index 1 = Zeile 1 usw...
+ReadFiletoArray(file) ;Index 0 = Amount of lines | Index 1 = line 1 etc...
 {
     Array := []
     line = 0

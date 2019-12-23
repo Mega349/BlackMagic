@@ -21,6 +21,10 @@ yViewAddress := GetAddress(PID, Base, ViewBase, yViewOffsetString)
 zViewAddress := GetAddress(PID, Base, ViewBase, zViewOffsetString)
 
 SpeedAddress := GetAddress(PID, Base, SpeedBase, SpeedOffsetString)
+
+currentCDAdress := GetAddress(PID, Base, CDBase, currentCDOffsetString)
+minCDAdress := GetAddress(PID, Base, CDBase, minCDOffsetString)
+maxCDAdress := GetAddress(PID, Base, CDBase, maxCDOffsetString)
 return
 
 RestoreSpeedFile:
@@ -68,6 +72,8 @@ GuiControlGet,FlyAccel,,FlyAccel
 GuiControlGet,SkipDistance,,SkipDistance
 GuiControlGet,SuperJumpAccel,,SuperJumpAccel
 GuiControlGet,FallManipulationAccel,,FallManipulationAccel
+GuiControlGet,minCamDistance,,minCamDistance
+GuiControlGet,maxCamDistance,,maxCamDistance
 
 IniWrite,%PointerAutoUpdate%,%iniFile%,General,PointerAutoUpdate
 IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
@@ -77,33 +83,10 @@ IniWrite,%FlyAccel%,%iniFile%,Values,FlyAccel
 IniWrite,%SkipDistance%,%iniFile%,Values,SkipDistance
 IniWrite,%SuperJumpAccel%,%iniFile%,Values,SuperJumpAccel
 IniWrite,%FallManipulationAccel%,%iniFile%,Values,FallManipulationAccel
-return
+IniWrite,%minCamDistance%,%iniFile%,Values,minCamDistance
+IniWrite,%maxCamDistance%,%iniFile%,Values,maxCamDistance
 
-Updateini:
-if (ConfigVersion < 2 || ConfigVersion == "" || ConfigVersion == "ERROR")
-{
-	ConfigVersion := 2
-	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
-	IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
-	IniWrite,%FloatKey%,%iniFile%,Hotkeys,FloatKey
-}
-if (ConfigVersion < 3)
-{
-	ConfigVersion := 3
-	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
-	IniWrite,%SuperJumpKey%,%iniFile%,Hotkeys,SuperJumpKey
-	IniWrite,%SuperJumpAccel%,%iniFile%,Values,SuperJumpAccel
-}
-if (ConfigVersion < 4)
-{
-	ConfigVersion := 4
-	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
-	IniWrite,%TroveJumpKey%,%iniFile%,TroveHotkeys,TroveJumpKey
-	IniWrite,%TroveAntiAFKKey%,%iniFile%,TroveHotkeys,TroveAntiAFKKey
-	IniWrite,%FallManipulationKey%,%iniFile%,Hotkeys,FallManipulationKey
-	IniWrite,%AntiAFKKey%,%iniFile%,Hotkeys,AntiAFKKey
-	IniWrite,%FallManipulationAccel%,%iniFile%,Values,FallManipulationAccel
-}
+Gosub, CustomCamDistanceLimit ;Set after change
 return
 
 GuiClose:
@@ -113,7 +96,7 @@ Restart:
 Run %A_ScriptFullPath%
 ExitApp
 
-ExitScript: ;wird durch "ExitFunktion()" aufgerufen zum beenden einfach den "ExitApp"-Befehl verwenden
+ExitScript: ;called through "ExitFunktion()" use "ExitApp" to run that code on exit.
 ExitApp
 
 ;------------------------
@@ -164,11 +147,12 @@ return
 refreshAddress:
 Gosub, getAddress
 
-if (oldySkipAddress != ySkipAddress)
+if (oldySkipAddress != ySkipAddress || oldPID != PID)
 {
-	Gosub, DisableHacksAtAddressChanged
+	Gosub, runAtAddressChange
 }
 
+oldPID := PID
 oldySkipAddress := ySkipAddress
 
 SetTimer, refreshAddress, -1000
