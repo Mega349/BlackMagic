@@ -1,5 +1,10 @@
+# v1.5.0 <br>
+\+ Calculated Speed Value for **Speedhack**, Speedfile no longer needed.<br>
+\# If you drive UP while using **Float**. You can change the acceleration in "blackconfig.ini".<br>
+\# Removed unused Code. <br>
+
 # v1.4.0 <br>
-\+ Custom Camera Distance Limit <br>
+\+ **Custom Camera Distance Limit** <br>
 \# Fixed Inputbox if Input is too long <br>
 
 # v1.3.1 <br>
@@ -23,8 +28,8 @@
 \# Hotkey fix after save <br>
 
 # v1.0 <br>
-\+ Skip <br>
-\+ Speed Hack <br>
-\+ Freeze Position <br>
-\+ Freeze High <br>
-\+ Free Fly <br>
+\+ **Skip** <br>
+\+ **Speed Hack** <br>
+\+ **Freeze Position** <br>
+\+ **Freeze High** <br>
+\+ **Free Fly** <br>

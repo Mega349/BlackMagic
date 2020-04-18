@@ -4,18 +4,13 @@ if !FileExist(PointerFile)
 	WritePointertoini(PointerFile)
 }
 
-if !FileExist(SpeedFile)
-{
-	Gosub, UpdateSpeedFile
-}
-
 if !FileExist(iniFile)
 {
 	IniWrite,1,%iniFile%,Version,ConfigVersion
 
 	IniWrite,%PointerAutoUpdate%,%iniFile%,General,PointerAutoUpdate
 	IniWrite,%EnableUpdateCheck%,%iniFile%,General,EnableUpdateCheck
-    IniWrite,%LastSpeed%,%iniFile%,General,LastSpeed
+    IniWrite,%DecSpeedValue%,%iniFile%,General,LastSpeed
 	IniWrite,%ShowTooltip%,%iniFile%,General,ShowTooltip
 
 	IniWrite,%FlyAccel%,%iniFile%,Values,FlyAccel
@@ -24,6 +19,7 @@ if !FileExist(iniFile)
 	IniWrite,%FallManipulationAccel%,%iniFile%,Values,FallManipulationAccel
 	IniWrite,%minCamDistance%,%iniFile%,Values,minCamDistance
 	IniWrite,%maxCamDistance%,%iniFile%,Values,maxCamDistance
+	IniWrite,%FloatAccel%,%iniFile%,Values,FloatAccel
 
 	Gosub, SaveHotkeysToINI
 	Gosub, SaveTroveHotkeysToINI
@@ -44,7 +40,7 @@ if FileExist(iniFile)
 
 	IniRead,PointerAutoUpdate,%iniFile%,General,PointerAutoUpdate
 	IniRead,EnableUpdateCheck,%iniFile%,General,EnableUpdateCheck
-    IniRead,Speed,%iniFile%,General,LastSpeed
+    IniRead,DecSpeedValue,%iniFile%,General,LastSpeed
 	IniRead,ShowTooltip,%iniFile%,General,ShowTooltip
 
 	IniRead,FlyAccel,%iniFile%,Values,FlyAccel
@@ -53,6 +49,7 @@ if FileExist(iniFile)
 	IniRead,FallManipulationAccel,%iniFile%,Values,FallManipulationAccel
 	IniRead,minCamDistance,%iniFile%,Values,minCamDistance
 	IniRead,maxCamDistance,%iniFile%,Values,maxCamDistance
+	IniRead,FloatAccel,%iniFile%,Values,FloatAccel
 
 	Gosub, LoadHotkeysFromINI
 	Gosub, LoadTroveHotkeysFromINI
@@ -80,9 +77,10 @@ WritePointertoini(ini)
 		IniWrite,%SpeedBase%,%ini%,speed,Base
 		IniWrite,%SpeedOffsetString%,%ini%,speed,Offsets
 		IniWrite,%CDBase%,%ini%,camera_Distance,Base
-		IniWrite,%currentCDOffsetString%,%ini%,camera_Distance,currentOffset
 		IniWrite,%minCDOffsetString%,%ini%,camera_Distance,minOffset
 		IniWrite,%maxCDOffsetString%,%ini%,camera_Distance,maxOffset
+		IniWrite,%EncKeyBase%,%ini%,StatEncKey,Base
+		IniWrite,%EncKeyOffsetString%,%ini%,StatEncKey,Offsets
 
 		state := TRUE
 	}
@@ -113,9 +111,10 @@ ReadPointerfromini(ini)
 	IniRead,SpeedBase,%ini%,speed,Base
 	IniRead,SpeedOffsetString,%ini%,speed,Offsets
 	IniRead,CDBase,%ini%,camera_Distance,Base
-	IniRead,currentCDOffsetString,%ini%,camera_Distance,currentOffset
 	IniRead,minCDOffsetString,%ini%,camera_Distance,minOffset
 	IniRead,maxCDOffsetString,%ini%,camera_Distance,maxOffset
+	IniRead,EncKeyBase,%ini%,StatEncKey,Base
+	IniRead,EncKeyOffsetString,%ini%,StatEncKey,Offsets
 }
 
 Updateini:
@@ -149,5 +148,11 @@ if (ConfigVersion < 5)
 	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
 	IniWrite,%minCamDistance%,%iniFile%,Values,minCamDistance
 	IniWrite,%maxCamDistance%,%iniFile%,Values,maxCamDistance
+}
+if (ConfigVersion < 6)
+{
+	ConfigVersion := 6
+	IniWrite,%ConfigVersion%,%iniFile%,Version,ConfigVersion
+	IniWrite,%FloatAccel%,%iniFile%,Values,FloatAccel
 }
 return

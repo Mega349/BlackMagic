@@ -91,6 +91,7 @@ return
 
 StartSpeed:
 Gosub, CheckTroveWindow
+Gosub, CalcEncSpeedValue
 EnableSpeed := 1
 Gosub, Speed
 return
@@ -102,9 +103,14 @@ return
 Speed:
 if (EnableSpeed == 1)
 {
-	WriteProcessMemory(PID, SpeedAddress, SpeedValue[Speed])
+	WriteProcessMemory(PID, SpeedAddress, EncSpeedValue)
 	SetTimer, Speed, -20
 }
+return
+
+CalcEncSpeedValue:
+Gosub, CheckTroveWindow
+EncSpeedValue := FloatToHex(DecSpeedValue) ^ ReadMemory(EncKeyAddress, PID)
 return
 
 ;------------------------
@@ -124,7 +130,7 @@ return
 Float:
 if (EnableFloat == 1)
 {
-	WriteProcessMemory(pid, yAccelerationAddress, FloatToHex(0.6))
+	WriteProcessMemory(pid, yAccelerationAddress, FloatToHex(FloatAccel))
 	SetTimer, Float, -10
 }
 return
@@ -211,8 +217,8 @@ return
 ;------------------------
 
 CustomCamDistanceLimit:
-WriteProcessMemory(PID, minCDAdress, FloatToHex(minCamDistance))
-WriteProcessMemory(PID, maxCDAdress, FloatToHex(maxCamDistance))
+WriteProcessMemory(PID, minCDAddress, FloatToHex(minCamDistance))
+WriteProcessMemory(PID, maxCDAddress, FloatToHex(maxCamDistance))
 return
 
 ;------------------------

@@ -13,15 +13,12 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.4.0"
+global ScriptVersion := "1.5.0"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 PointerHostFile := "https://webtrash.lima-city.de/Trove_Pointer_Host.ini"
-SpeedHostFile := "https://webtrash.lima-city.de/SpeedValue.txt"
 VersionsFile := "https://webtrash.lima-city.de/Versions.ini"
 PointerFile := "pointer.ini"
-SpeedFile := "SpeedValue.txt"
-SpeedFileBackup := "SpeedValue.txt.back"
 iniFile := "blackconfig.ini"
 
 ;Pointer blank Pattern
@@ -47,22 +44,25 @@ global SpeedOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
 ;CD = Camera Distance
 global CDBase := "0x00000000"
-global currentCDOffsetString := "0x0+0x0" ;unused, will be added later
 global minCDOffsetString := "0x0+0x0"
 global maxCDOffsetString := "0x0+0x0"
+
+global EncKeyBase := "0x00000000"
+global EncKeyOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
 
 ;default Config
 PointerAutoUpdate := 1
 EnableUpdateCheck := 1
 ShowTooltip := 1
-LastSpeed := 1
 FlyAccel := 20
 SkipDistance := 3.5
 SuperJumpAccel := 20
 FallManipulationAccel := -3
 minCamDistance := 1.5
 maxCamDistance := 4.2
+FloatAccel := 0.4
+DecSpeedValue := 260
 
 
 ;default Keys
@@ -98,11 +98,6 @@ defaultTroveAntiAFKKey := TroveAntiAFKKey
 
 
 ;Internal Vars
-SplitSpeed := []
-SpeedString := []
-SpeedValue := []
-SpeedDispValue := []
-SpeedValueString := []
 AntiAFKDelay := 2500
 
 ;------------------------
@@ -150,30 +145,6 @@ if (PointerAutoUpdate == TRUE)
 		}
 	    FileDelete,%TempPointerFile%
 	}
-}
-
-SpeedString := ReadFiletoArray(SpeedFile)
-
-CounterPOS := 1
-while (CounterPOS <= SpeedString.Length())
-{
-	SplitSpeed := StrSplit(SpeedString[CounterPOS] ,"=")
-	SpeedDispValue[CounterPOS] := SplitSpeed[1]
-	SpeedValue[CounterPOS] := SplitSpeed[2]
-	CounterPOS++
-}
-CounterPOS := 1
-while (CounterPOS <= SpeedString.Length())
-{
-	if (CounterPOS == 1)
-	{
-		SpeedValueString := SpeedDispValue[CounterPOS]
-	}
-	Else
-	{
-		SpeedValueString := SpeedValueString "|" SpeedDispValue[CounterPOS]
-	}
-	CounterPOS++
 }
 
 ;------------------------

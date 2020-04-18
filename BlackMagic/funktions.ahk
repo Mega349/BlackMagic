@@ -2,29 +2,6 @@
 ;own Functions:
 ;------------------------
 
-ReadFiletoArray(file) ;Index 0 = Amount of lines | Index 1 = line 1 etc...
-{
-    Array := []
-    line = 0
-    counter := 0
-
-    fileObjekt := FileOpen(file, "r")
-    while (line != "")
-    {
-        counter++
-        line := fileObjekt.ReadLine()
-
-        if (line != "")
-        {
-            Array[counter] := RTrim(line,"`n")
-        }
-    }
-    Array[0] := Array.Length()
-    fileObjekt.Close()
-
-    return Array
-}
-
 ExitFunktion()
 {
     gosub,ExitScript
@@ -68,19 +45,18 @@ GetAddress(PID, Base, Address, Offset)
 	Return Address
 }
 
-ReadMemory(MADDRESS, pid)
+ReadMemory(MADDRESS, pid, size = 4)
 {
-	VarSetCapacity(MVALUE,4,0)
+	VarSetCapacity(MVALUE,size,0)
 	ProcessHandle := DllCall("OpenProcess", "Int", 24, "Char", 0, "UInt", pid, "UInt")
-	DllCall("ReadProcessMemory", "UInt", ProcessHandle, "Ptr", MADDRESS, "Ptr", &MVALUE, "Uint",4)
-	Loop 4
+	DllCall("ReadProcessMemory", "UInt", ProcessHandle, "Ptr", MADDRESS, "Ptr", &MVALUE, "Uint",size)
+	Loop %size%
 	result += *(&MVALUE + A_Index-1) << 8*(A_Index-1)
 	Return, result
 }
 
-WriteProcessMemory(pid,address,wert)
+WriteProcessMemory(pid,address,wert, size = 4)
 {
-	size=4 ;changeable
 	VarSetCapacity(processhandle,32,0)
 	VarSetCapacity(value, 32, 0)
 	NumPut(wert,value,0,Uint)
