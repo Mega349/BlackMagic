@@ -13,7 +13,7 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.5.0"
+global ScriptVersion := "1.6.0"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 PointerHostFile := "https://webtrash.lima-city.de/Trove_Pointer_Host.ini"
@@ -24,37 +24,48 @@ iniFile := "blackconfig.ini"
 ;Pointer blank Pattern
 global LastUpdateSupport := "01.01.2000"
 
+global SkipSize := 0
 global SkipBase := "0x00000000"
 global xSkipOffsetString := "0x0+0x0+0x0+0x0+0x0"
 global ySkipOffsetString := "0x0+0x0+0x0+0x0+0x0"
 global zSkipOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
+global AccelerationSize := 0
 global AccelerationBase := "0x00000000"
 global xAccelerationOffsetString := "0x0+0x0+0x0+0x0+0x0"
 global yAccelerationOffsetString := "0x0+0x0+0x0+0x0+0x0"
 global zAccelerationOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
+global ViewSize := 0
 global ViewBase := "0x00000000"
 global xViewOffsetString := "0x0+0x0+0x0+0x0+0x0"
 global yViewOffsetString := "0x0+0x0+0x0+0x0+0x0"
 global zViewOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
+global SpeedSize := 0
 global SpeedBase := "0x00000000"
 global SpeedOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
 ;CD = Camera Distance
+global CDSize := 0
 global CDBase := "0x00000000"
 global minCDOffsetString := "0x0+0x0"
 global maxCDOffsetString := "0x0+0x0"
 
+global cViewSize := 0
+global cViewBase := "0x00000000"
+global cViewHightSOffsetString := "0x0+0x0"
+global cViewWidthOffsetString := "0x0+0x0"
+
+global EncKeySize := 0
 global EncKeyBase := "0x00000000"
 global EncKeyOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
 
 ;default Config
-PointerAutoUpdate := 1
-EnableUpdateCheck := 1
-ShowTooltip := 1
+PointerAutoUpdate := true
+EnableUpdateCheck := true
+ShowTooltip := true
 FlyAccel := 20
 SkipDistance := 3.5
 SuperJumpAccel := 20
@@ -63,6 +74,8 @@ minCamDistance := 1.5
 maxCamDistance := 4.2
 FloatAccel := 0.4
 DecSpeedValue := 260
+EnableForceAccel := true
+EnableStopIfDontMove := false
 
 
 ;default Keys
@@ -80,6 +93,10 @@ AntiAFKKey = ^h
 ;default Trove Keys
 TroveJumpKey = space
 TroveAntiAFKKey = m
+TroveMoveForwardKey = w
+TroveMoveLeftKey = a
+TroveMoveBackwardKey = s
+TroveMoveRightKey = d
 
 
 ;backup default Keys
@@ -95,10 +112,15 @@ defaultAntiAFKKey := AntiAFKKey
 
 defaultTroveJumpKey := TroveJumpKey
 defaultTroveAntiAFKKey := TroveAntiAFKKey
+defaultTroveMoveForwardKey := TroveMoveForwardKey
+defaultTroveMoveLeftKey := TroveMoveLeftKey
+defaultTroveMoveBackwardKey := TroveMoveBackwardKey
+defaultTroveMoveRightKey := TroveMoveRightKey
 
 
 ;Internal Vars
 AntiAFKDelay := 2500
+PI := 3.1414
 
 ;------------------------
 ;Start:

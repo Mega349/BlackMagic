@@ -1,3 +1,11 @@
+# v1.6.0 <br>
+\+ Forced acceleration for **Speedhack** (no Slowdown while moving and run clean around the corner) (Enabled by default)<br>
+\+ Stop if dont move for **Speedhack** (Stop Player if you dont press a move button, but you cant fly with **Speedhack**) (Disabled by default)<br>
+\# some internal changes (like changed ini entry [General] LastSpeed -> [Value] Speed)<br>
+
+### Known issues:
+- Problems with CTRL/ALT/... while **AntiAFK** is enabled<br>
+
 # v1.5.0 <br>
 \+ Calculated Speed Value for **Speedhack**, Speedfile no longer needed.<br>
 \# If you drive UP while using **Float**. You can change the acceleration in "blackconfig.ini".<br>

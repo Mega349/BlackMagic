@@ -55,11 +55,11 @@ ReadMemory(MADDRESS, pid, size = 4)
 	Return, result
 }
 
-WriteProcessMemory(pid,address,wert, size = 4)
+WriteProcessMemory(pid,address,valueToWrite, size = 4)
 {
 	VarSetCapacity(processhandle,32,0)
 	VarSetCapacity(value, 32, 0)
-	NumPut(wert,value,0,Uint)
+	NumPut(valueToWrite,value,0,Uint)
 	processhandle:=DllCall("OpenProcess","Uint",0x38,"int",0,"int",pid)
 	Bvar:=DllCall("WriteProcessMemory","Uint",processhandle,"Uint",address+0,"Uint",&value,"Uint",size,"Uint",0)
 }
