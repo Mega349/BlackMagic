@@ -1,4 +1,4 @@
-# v1.6.0 <br>
+# v1.6.1 <br>
 \# dont move if write in Chat while **Speedhack** is enabled<br>
 
 ### Known issues:
