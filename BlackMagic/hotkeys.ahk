@@ -214,7 +214,7 @@ InitHotkeys:
     }
 
     gosub, CheckTroveWindow
-    Hotkey, IfWinActive, ahk_pid %PID%
+    Hotkey, IfWinActive, ahk_exe Trove.exe
 
     if (SkipKey != "")
     {
