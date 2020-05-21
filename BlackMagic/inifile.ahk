@@ -104,6 +104,9 @@ WritePointertoini(ini)
 		IniWrite,%EncKeyBase%,%ini%,StatEncKey,Base
 		IniWrite,%EncKeyOffsetString%,%ini%,StatEncKey,Offsets
 
+		IniWrite,%InputBoxSize%,%ini%,InputBox,Size
+		IniWrite,%InputBoxBase%,%ini%,InputBox,Base
+
 		state := TRUE
 	}
 	else
@@ -153,6 +156,9 @@ ReadPointerfromini(ini)
 	IniRead,EncKeySize,%ini%,StatEncKey,Size
 	IniRead,EncKeyBase,%ini%,StatEncKey,Base
 	IniRead,EncKeyOffsetString,%ini%,StatEncKey,Offsets
+
+	IniRead,InputBoxSize,%ini%,InputBox,Size
+	IniRead,InputBoxBase,%ini%,InputBox,Base
 }
 
 Updateini:

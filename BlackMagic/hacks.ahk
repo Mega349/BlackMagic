@@ -110,14 +110,11 @@ Speed:
 			Gosub, getBitWiseWASD
 		}
 
-		if (EnableForceAccel)
+		if (wasd != 0x0 && EnableForceAccel && ReadMemory(InputBoxAddress, PID,InputBoxSize) == 0)
 		{
 			Gosub, CalcNewSpeedAccel
-			if (wasd != 0x0)
-			{
-				WriteProcessMemory(pid, xAccelerationAddress, FloatToHex(xNewSpeedAccel), AccelerationSize)
-				WriteProcessMemory(pid, zAccelerationAddress, FloatToHex(zNewSpeedAccel), AccelerationSize)
-			}
+			WriteProcessMemory(pid, xAccelerationAddress, FloatToHex(xNewSpeedAccel), AccelerationSize)
+			WriteProcessMemory(pid, zAccelerationAddress, FloatToHex(zNewSpeedAccel), AccelerationSize)
 		}
 
 		if (wasd == 0x0 && EnableStopIfDontMove)
@@ -138,28 +135,28 @@ CalcEncSpeedValue:
 CalcNewSpeedAccel:
 	SpeedBaseAccel := (DecSpeedValue/10)
 	SpeedCurrentCameraWidth := HexToFloat(ReadMemory(cViewWidthAddress, PID, cViewSize))
-	SpeedCurrentCameraAngel := (360/(2*PI)) * SpeedCurrentCameraWidth
+	SpeedCurrentCameraAngle := (360/(2*PI)) * SpeedCurrentCameraWidth
 
 	switch wasd
 	{
-		case 0x8,0xD,0xF: 	SpeedNewCameraAngel := mod(SpeedCurrentCameraAngel, 360)  		;w,wad,wasd
-		case 0xC,0xE:		SpeedNewCameraAngel := mod(SpeedCurrentCameraAngel + 45, 360)	;wa,was
-		case 0x4:			SpeedNewCameraAngel := mod(SpeedCurrentCameraAngel + 90, 360)	;a
-		case 0x6:			SpeedNewCameraAngel := mod(SpeedCurrentCameraAngel + 135, 360)	;as
-		case 0x2,0x7:		SpeedNewCameraAngel := mod(SpeedCurrentCameraAngel + 180, 360)	;s,asd
-		case 0x3:			SpeedNewCameraAngel := mod(SpeedCurrentCameraAngel + 225, 360)	;sd
-		case 0x1:			SpeedNewCameraAngel := mod(SpeedCurrentCameraAngel + 270, 360)	;d
-		case 0x9,0xB:		SpeedNewCameraAngel := mod(SpeedCurrentCameraAngel + 315, 360)	;wd,wsd
+		case 0x8,0xD,0xF: 	SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle, 360)  		;w,wad,wasd
+		case 0xC,0xE:		SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 45, 360)	;wa,was
+		case 0x4:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 90, 360)	;a
+		case 0x6:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 135, 360)	;as
+		case 0x2,0x7:		SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 180, 360)	;s,asd
+		case 0x3:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 225, 360)	;sd
+		case 0x1:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 270, 360)	;d
+		case 0x9,0xB:		SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 315, 360)	;wd,wsd
 	}
 
-	xNewSpeedAccel := SpeedBaseAccel * sin(SpeedNewCameraAngel * (PI / 180))
-	zNewSpeedAccel := SpeedBaseAccel * cos(SpeedNewCameraAngel * (PI / 180))
+	xNewSpeedAccel := SpeedBaseAccel * sin(SpeedNewCameraAngle * (PI / 180))
+	zNewSpeedAccel := SpeedBaseAccel * cos(SpeedNewCameraAngle * (PI / 180))
 	return
 
-; angelInDegree = (360/(2*PI)) * CameraWidth
-; angelInRadian = angelInDegree * (PI/180)
-; xView = sin(angelInRadian)
-; zView = cos(angelInRadian)
+; angleInDegree = (360/(2*PI)) * CameraWidth
+; angleInRadian = angleInDegree * (PI/180)
+; xView = sin(angleInRadian)
+; zView = cos(angleInRadian)
 
 ;------------------------
 ;Float:
@@ -200,12 +197,9 @@ StopSuperJump:
 SuperJump:
 	if (EnableSuperJump == 1)
 	{
-		if (GetKeyState(TroveJumpKey, P))
+		if (GetKeyState(TroveJumpKey, P) && ReadMemory(InputBoxAddress, PID,InputBoxSize) == 0)
 		{
 			ySuperJumpCurrentAccel := HexToFloat(ReadMemory(yAccelerationAddress, PID, AccelerationSize))
-		}
-		if (ySuperJumpCurrentAccel > 8) ;dont jump if writing in chat or something else
-		{
 			WriteProcessMemory(PID, yAccelerationAddress, FloatToHex(SuperJumpAccel), AccelerationSize)
 			ySuperJumpCurrentAccel := 0
 		}

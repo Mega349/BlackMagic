@@ -13,7 +13,7 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.6.0"
+global ScriptVersion := "1.6.1"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 PointerHostFile := "https://webtrash.lima-city.de/Trove_Pointer_Host.ini"
@@ -61,6 +61,8 @@ global EncKeySize := 0
 global EncKeyBase := "0x00000000"
 global EncKeyOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
+global InputBoxSize := 0
+global InputBoxBase := "0x00000000"
 
 ;default Config
 PointerAutoUpdate := true

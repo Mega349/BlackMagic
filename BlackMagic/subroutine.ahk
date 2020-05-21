@@ -30,6 +30,8 @@ getAddress:
 	cViewWidthAddress := GetAddress(PID, Base, cViewBase, cViewWidthOffsetString)
 
 	EncKeyAddress := GetAddress(PID, Base, EncKeyBase, EncKeyOffsetString)
+
+	InputBoxAddress := GetAddress(PID, Base, InputBoxBase)
 	return
 
 Save:

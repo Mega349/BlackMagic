@@ -1,4 +1,10 @@
 # v1.6.0 <br>
+\# dont move if write in Chat while **Speedhack** is enabled<br>
+
+### Known issues:
+- Problems with CTRL/ALT/... while **AntiAFK** is enabled<br>
+
+# v1.6.0 <br>
 \+ Forced acceleration for **Speedhack** (no Slowdown while moving and run clean around the corner) (Enabled by default)<br>
 \+ Stop if dont move for **Speedhack** (Stop Player if you dont press a move button, but you cant fly with **Speedhack**) (Disabled by default)<br>
 \# some internal changes (like changed ini entry [General] LastSpeed -> [Value] Speed)<br>

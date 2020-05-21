@@ -21,9 +21,13 @@ getProcessBaseAddress(Handle)
     , "Int64")
 }
 	
-GetAddress(PID, Base, Address, Offset)
+GetAddress(PID, Base, Address, Offset = "")
 {
 	pointerBase := base + Address
+	if (Offset == "")
+	{
+		return pointerBase
+	}
 	y := ReadMemory(pointerBase,PID)
 	OffsetSplit := StrSplit(Offset, "+")
 	OffsetCount := OffsetSplit.MaxIndex()
