@@ -103,26 +103,26 @@ StopSpeed:
 Speed:
 	if (EnableSpeed == 1)
 	{
-		WriteProcessMemory(PID, SpeedAddress, EncSpeedValue, SpeedSize)
-
-		if (EnableForceAccel || EnableStopIfDontMove)
+		if (WinActive("ahk_pid" pid))
 		{
-			Gosub, getBitWiseWASD
-		}
+			WriteProcessMemory(PID, SpeedAddress, EncSpeedValue, SpeedSize)
 
-		if (wasd != 0x0 && EnableForceAccel && ReadMemory(InputBoxAddress, PID,InputBoxSize) == 0)
-		{
-			Gosub, CalcNewSpeedAccel
-			WriteProcessMemory(pid, xAccelerationAddress, FloatToHex(xNewSpeedAccel), AccelerationSize)
-			WriteProcessMemory(pid, zAccelerationAddress, FloatToHex(zNewSpeedAccel), AccelerationSize)
+			if (EnableForceAccel || EnableStopIfDontMove)
+			{
+				Gosub, getBitWiseWASD
+			}
+			if (wasd != 0x0 && EnableForceAccel && ReadMemory(InputBoxAddress, PID,InputBoxSize) == 0)
+			{
+				Gosub, CalcNewSpeedAccel
+				WriteProcessMemory(pid, xAccelerationAddress, FloatToHex(xNewSpeedAccel), AccelerationSize)
+				WriteProcessMemory(pid, zAccelerationAddress, FloatToHex(zNewSpeedAccel), AccelerationSize)
+			}
+			if (wasd == 0x0 && EnableStopIfDontMove)
+			{
+				WriteProcessMemory(pid, xAccelerationAddress, FloatToHex(0), AccelerationSize)
+				WriteProcessMemory(pid, zAccelerationAddress, FloatToHex(0), AccelerationSize)
+			}
 		}
-
-		if (wasd == 0x0 && EnableStopIfDontMove)
-		{
-			WriteProcessMemory(pid, xAccelerationAddress, FloatToHex(0), AccelerationSize)
-			WriteProcessMemory(pid, zAccelerationAddress, FloatToHex(0), AccelerationSize)
-		}
-
 		SetTimer, Speed, -20
 	}
 	return
@@ -197,7 +197,7 @@ StopSuperJump:
 SuperJump:
 	if (EnableSuperJump == 1)
 	{
-		if (GetKeyState(TroveJumpKey, P) && ReadMemory(InputBoxAddress, PID,InputBoxSize) == 0)
+		if (GetKeyState(TroveJumpKey, P) && ReadMemory(InputBoxAddress, PID,InputBoxSize) == 0 && WinActive("ahk_pid" pid))
 		{
 			ySuperJumpCurrentAccel := HexToFloat(ReadMemory(yAccelerationAddress, PID, AccelerationSize))
 			WriteProcessMemory(PID, yAccelerationAddress, FloatToHex(SuperJumpAccel), AccelerationSize)

@@ -13,7 +13,7 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.6.1"
+global ScriptVersion := "1.6.2"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 PointerHostFile := "https://webtrash.lima-city.de/Trove_Pointer_Host.ini"
@@ -129,21 +129,7 @@ PI := 3.1414
 ;------------------------
 
 SplashTextOn,130,25,% ScriptName " v" ScriptVersion,% "Starting..."
-
-;------------------------
-;Admin Check:
-;------------------------
-
-if !A_IsAdmin
-{
-	try
-	{
-		Run *RunAs %A_ScriptFullPath%
-		ExitApp
-	}
-	ExitApp ;continue without Admin permissions? - here no
-}
-
+ 
 ;------------------------
 ;Create and Read INI File:
 ;------------------------

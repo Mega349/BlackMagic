@@ -213,6 +213,9 @@ InitHotkeys:
         Hotkey, ^T, ExitScript
     }
 
+    gosub, CheckTroveWindow
+    Hotkey, IfWinActive, ahk_pid %PID%
+
     if (SkipKey != "")
     {
         Hotkey, %SkipKey%, PressedSkipKey, on
