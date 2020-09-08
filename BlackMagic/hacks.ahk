@@ -139,14 +139,14 @@ CalcNewSpeedAccel:
 
 	switch wasd
 	{
-		case 0x8,0xD,0xF: 	SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle, 360)  		;w,wad,wasd
-		case 0xC,0xE:		SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 45, 360)	;wa,was
-		case 0x4:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 90, 360)	;a
-		case 0x6:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 135, 360)	;as
-		case 0x2,0x7:		SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 180, 360)	;s,asd
-		case 0x3:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 225, 360)	;sd
-		case 0x1:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 270, 360)	;d
-		case 0x9,0xB:		SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 315, 360)	;wd,wsd
+		case 0x8,0xD,0xF,0xA: 	SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle, 360)  		;w,wad,wasd,ws
+		case 0xC,0xE:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 45, 360)	;wa,was
+		case 0x4:				SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 90, 360)	;a
+		case 0x6:				SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 135, 360)	;as
+		case 0x2,0x7:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 180, 360)	;s,asd
+		case 0x3:				SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 225, 360)	;sd
+		case 0x1,0x5:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 270, 360)	;d,ad
+		case 0x9,0xB:			SpeedNewCameraAngle := mod(SpeedCurrentCameraAngle + 315, 360)	;wd,wsd
 	}
 
 	xNewSpeedAccel := SpeedBaseAccel * sin(SpeedNewCameraAngle * (PI / 180))

@@ -1,5 +1,5 @@
 # v1.6.3 <br>
-\# Hotkeys can be used again after Trove restart (fix for 1.6.2)<br
+\# Hotkeys can be used again after Trove restart (fix for 1.6.2)<br>
 
 # v1.6.2 <br>
 \# Hotkeys no longer work out of Trove<br>

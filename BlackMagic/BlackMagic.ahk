@@ -13,7 +13,7 @@ OnExit("ExitFunktion")
 
 ;File / Name / Location Vars
 global ScriptName := "BlackMagic"
-global ScriptVersion := "1.6.3"
+global ScriptVersion := "1.6.4"
 TempPointerFile = %A_Temp%\Trove_Pointer.ini
 TempVersionsFile = %A_Temp%\Versions.ini
 PointerHostFile := "https://webtrash.lima-city.de/Trove_Pointer_Host.ini"
@@ -46,7 +46,6 @@ global SpeedSize := 0
 global SpeedBase := "0x00000000"
 global SpeedOffsetString := "0x0+0x0+0x0+0x0+0x0"
 
-;CD = Camera Distance
 global CDSize := 0
 global CDBase := "0x00000000"
 global minCDOffsetString := "0x0+0x0"
