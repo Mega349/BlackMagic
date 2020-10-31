@@ -90,7 +90,7 @@ WritePointertoini(ini)
 		IniWrite,%SpeedBase%,%ini%,speed,Base
 		IniWrite,%SpeedOffsetString%,%ini%,speed,Offsets
 		
-		IniWrite,%CDBase%,%ini%,camera_Distance,Size
+		IniWrite,%CDSize%,%ini%,camera_Distance,Size
 		IniWrite,%CDBase%,%ini%,camera_Distance,Base
 		IniWrite,%minCDOffsetString%,%ini%,camera_Distance,minOffset
 		IniWrite,%maxCDOffsetString%,%ini%,camera_Distance,maxOffset
@@ -143,7 +143,7 @@ ReadPointerfromini(ini)
 	IniRead,SpeedBase,%ini%,speed,Base
 	IniRead,SpeedOffsetString,%ini%,speed,Offsets
 	
-	IniRead,CDBase,%ini%,camera_Distance,Size
+	IniRead,CDSize,%ini%,camera_Distance,Size
 	IniRead,CDBase,%ini%,camera_Distance,Base
 	IniRead,minCDOffsetString,%ini%,camera_Distance,minOffset
 	IniRead,maxCDOffsetString,%ini%,camera_Distance,maxOffset
